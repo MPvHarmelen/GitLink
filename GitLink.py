@@ -100,6 +100,8 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                     domain = match.group(1)
 
         else:
+            remote = re.match(r'(?:https?://)(.*)', remote).group(1)
+
             # HTTP repository
             if hosting_name == 'codebasehq':
                 # format is {user}.codebasehq.com/{project}/{repo}.git
@@ -110,7 +112,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 # format is {domain}/{user}/{repo}.git
                 domain, user, repo = remote.split("/")
                 project = None
-        print(domain, user, repo)
+
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
 
